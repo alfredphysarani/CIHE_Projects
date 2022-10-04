@@ -1,0 +1,1 @@
+print(len("Emerging Technologies"))
