@@ -77,8 +77,12 @@ Step 5: 3.0 #subtraction
 print("hello world")
 
 #Q2: Please print multiple lines of text on the screen
-print('''Today is Thursday \n
-This is the first python lecture \n
+#print('''Today is Thursday
+#This is the first python lecture
+#I want to learn programming1''')
+
+print('''Today is Thursday
+This is the first python lecture
 I want to learn programming1''')
 
 #Q3: define two variables x and y, and x=3, y=4, z=x*y, please print the value of z on the screen.

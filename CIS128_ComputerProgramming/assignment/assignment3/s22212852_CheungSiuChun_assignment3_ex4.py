@@ -41,4 +41,3 @@ if (sqr_len_AB + sqr_len_BC > sqr_len_CA) and (sqr_len_AB + sqr_len_CA > sqr_len
 else:
     print(f"The triangle with coordinates ({x_a}, {y_a}), ({x_b}, {y_b}), ({x_c}, {y_c}) is NOT an acute-angled triangle.")
 
-
