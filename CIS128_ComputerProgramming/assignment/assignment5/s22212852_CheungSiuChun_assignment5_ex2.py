@@ -33,14 +33,9 @@ print(f"The length of the string by for-Loops: {for_loop_length_str(txt)}")
 
 def while_loop_length_str(txt):
     n = 0
-    error = False
-    while error == False:
-        try:
-            txt[n]
-            n += 1
-        except:
-            error = True
-    
+    while txt[n:]:
+        n += 1
+
     return n
 
 print(f"The length of the string by while-Loops: {while_loop_length_str(txt)}")
