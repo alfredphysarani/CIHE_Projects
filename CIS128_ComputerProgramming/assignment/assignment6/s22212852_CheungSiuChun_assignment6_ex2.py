@@ -15,7 +15,7 @@ Max = 4.0
 Mean = 2.5
 '''
 
-print("Programme: Afternoon greets to names")
+print("Programme: min, max and mean of a sequence of numbers")
 numbers = input("Please input multiple numbers and use space to separate each number: ")
 
 def number_list_analysis(numbers: str):

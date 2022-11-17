@@ -30,7 +30,6 @@ print(f"The length of the string by for-Loops: {for_loop_length_str(txt)}")
 
 #c. Using while-Loops
 
-
 def while_loop_length_str(txt):
     n = 0
     while txt[n:]:
