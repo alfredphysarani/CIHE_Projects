@@ -216,9 +216,8 @@ Core Functions
 def initiation():
     '''
     Purpose: 
-        1. To initiate and display the major functions of the Student Mangement System
-        2. To check and read the text file: student_info.txt
-        3. If the file does not exist, then ask the user 
+        1. To check and read the text file: student_info.txt
+        2. If the file does not exist, then ask the user 
     Parameter: nil
     Return: nil
     '''
@@ -227,6 +226,18 @@ def initiation():
 
     # Check whether the student_info.txt exists under the current directory, if not, ask if create one
     s_info = fileOpener(fileName="student_info.txt", openMode="r", allowCreate=True)
+    
+    # closing the file first
+    fileCloser(s_info)
+
+def func_curator():
+    '''
+    Purpose: 
+        1. To take in user input from 1-6 or other character and launch the related function
+        2. To initiate and display the major functions of the Student Mangement System
+    Parameter: nil
+    Return: nil
+    '''
     
     # Printing List of function of the system
     print("--- Welcome to Student Mangement System ---\n\
@@ -238,17 +249,6 @@ def initiation():
         5. Display All Student\n\
         6. Exit \n\
         --------------------------")
-    
-    # closing the file first
-    fileCloser(s_info)
-
-def func_curator():
-    '''
-    Purpose: 
-        1. To take in user input from 1-6 or other character and launch the related function
-    Parameter: nil
-    Return: nil
-    '''
     
     # list of valid input for validation
     valid_opt = ["1", "2", "3", "4", "5", "6"]
@@ -276,8 +276,7 @@ def func_curator():
     elif option == "5":
         displayAll()
     elif option == "6":
-        print("Quit Student Mangement System. Have a good day!")
-        exit()
+        exitSys()
 
 def addEntry():
     '''
@@ -611,6 +610,16 @@ def displayAll():
     print(sDicts)
     fileCloser(sInfo)
     return sDicts
+
+def exitSys():
+    print("Do you want to quit the system?")
+    ans = optionInputNValidation({"Y": "exit", "N": "stay"})
+
+    if ans == "Y":
+        print("Quit Student Mangement System. Have a good day!")
+        exit()
+    elif ans =="N":
+        return None
 
 initiation()
 while True:
