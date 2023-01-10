@@ -1,0 +1,6 @@
+{'name': 'Shiba', 'gender': 'M', 'age': '20'}
+{'name': 'Graves', 'gender': 'F', 'age': 40}
+{'name': 'Alan Skywalker', 'gender': 'M', 'age': 21}
+{'name': 'Alan Swimmer', 'gender': 'F', 'age': 18}
+{'name': 'Alan Swimmer', 'gender': 'M', 'age': 22}
+{'name': 'Student A', 'gender': 'M', 'age': '12'}
