@@ -292,7 +292,7 @@ def addEntry():
     Return: nil
     '''
     print("----- Add New Entry -----")
-    sDicts = displayAll()
+    sDicts = displayAll("internal")
     sNameList = []
     for sDict in sDicts:
         sNameList.append(sDict["name"])
@@ -338,7 +338,11 @@ def addEntry():
 
 def deleteEntry():
     print("----- Delete Entry -----")
-    sDicts = displayAll()
+    sDicts = displayAll("internal")
+
+    if len(sDicts) == 0:
+        input("There is no entry in the system at the moment. Please Add an entry. Input any key to return to menu. ")
+        return None
 
     confirmed = False
     while confirmed == False:
@@ -439,7 +443,11 @@ def deleteEntry():
                 
 def updateEntry():
     print("----- Update Entry -----")
-    sDicts = displayAll()
+    sDicts = displayAll("internal")
+
+    if len(sDicts) == 0:
+        input("There is no entry in the system at the moment. Please Add an entry. Input any key to return to menu. ")
+        return None
 
     confirmed = False
     while confirmed == False:
@@ -588,10 +596,16 @@ def searchEntry():
     if not sInfo:
         # quit the system if file not found, to avoid error
         exit()
-    name = nameInputNValidation()
-
+    
     matchList = []
     sDicts = studentInfoReader(sInfo)
+
+    if len(sDicts) == 0:
+        input("There is no entry in the system at the moment. Please Add an entry. Input any key to return to menu. ")
+        return None
+    
+    name = nameInputNValidation()
+
     for sDict in sDicts:
         if sDict["name"] == name:
             matchList.append(sDict)
@@ -599,7 +613,7 @@ def searchEntry():
     print(f"The system found {len(matchList)} record.")
     print(f"The serach result: {matchList}")
 
-def displayAll():
+def displayAll(callBy="user"):
     sInfo = fileOpener(fileName="student_info.txt", openMode="r", allowCreate=False)
     if not sInfo:
         # quit the system if file not found, to avoid error
@@ -608,6 +622,8 @@ def displayAll():
     sDicts = studentInfoReader(sInfo)
     print(f"The system currently has {len(sDicts)} records.")
     print(sDicts)
+    if callBy != "internal":
+        input("Press any key to return to menu.")
     fileCloser(sInfo)
     return sDicts
 
@@ -621,6 +637,7 @@ def exitSys():
     elif ans =="N":
         return None
 
+# Main Execution of functions
 initiation()
 while True:
     func_curator()
