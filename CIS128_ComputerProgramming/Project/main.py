@@ -56,7 +56,7 @@ def fileOpener(fileName: str, openMode: str, allowCreate: bool):
         # if file exists, open and return the file object
         fileOpened = open(fileName, openMode, encoding="utf-8")
         if fileOpened:
-            print(f"{os.getcwd()}\{fileName} is the targeted record.")
+            print(f"{os.getcwd()}\{fileName} is the targeted file.")
         return fileOpened
 
 def fileCloser(file):
@@ -112,7 +112,7 @@ def optionInputNValidation(optionDict: dict):
     ans = ""
     while ans not in optionDict.keys():
         ans = input(question)
-        ans = ans.upper()
+        ans = ans.upper().strip()
         if ans not in optionDict.keys():
             print("The key is not a valid option.")
     
@@ -141,7 +141,7 @@ def nameInputNValidation():
         # using regex only accept characters starting with char and ending with char + ".", allow space in the middle
         nameValid = re.fullmatch("^[A-Z][a-z]*(\s[A-Z][a-z]*)*$", name)
         if not nameValid:
-            print(f"The input name {nameInput} contains invalid character. Please input a valid name.")
+            print(f"The input name '{nameInput}' contains invalid character(s) / invalid format / empty. Please input a valid name.")
     
     return name
 
@@ -166,10 +166,10 @@ def genderInputNValidation(name: str):
     # Gender input and validation
     while not genderValid:
         genderInput = input(f"Please input the gender of {name} (M/F): ")
-        gender = genderInput.upper()
+        gender = genderInput.upper().strip()
         
         if gender not in validGenderDict:
-            print(f"The input gender {genderInput} is not a valid gender. Please input a valid gender.")
+            print(f"The input gender '{genderInput}' is not a valid gender. Please input a valid gender.")
         else:
             genderOut = validGenderDict[gender]
             genderValid = True
@@ -192,18 +192,18 @@ def ageInputNValidation(name: str):
         # filter any age less than 0 and greater than 150 (a reasonable range for human age)
         ageInput = input(f"Please input the age of {name} (accept 0 to 150): ")
         try:
-            age = float(ageInput)
+            age = float(ageInput.strip())
         except ValueError:
-            print(f"The age {ageInput} is not a valid number. Please input a valid age.")
+            print(f"The age '{ageInput}' is not a valid number. Please input a valid age.")
             continue
 
         if age % 1 != 0:
-            print(f"The {ageInput} input is not an integer. It will be round down to {age//1}")
+            print(f"The '{ageInput}' input is not an integer. It will be round down to {age//1}")
         
         age = int(age//1)
 
         if age < 0:
-            print(f"The input age {ageInput} is not less than zero. Please input a valid age.")
+            print(f"The input age {ageInput} is less than zero. Please input a valid age.")
         elif age > 150:
             print(f"The input age {ageInput} input is greater than 150. Please input a reasonable age.")
     
@@ -257,7 +257,7 @@ def func_curator():
     # check whether user input is in the the valid option list
     while option not in valid_opt:
         option = input("Please type 1 - 6 to select a function of the system: ")
-        option = option.replace(".","") # using option.replace(".", "") to allow user type x
+        option = option.strip() # using option.replace(".", "") to allow user type x
 
         if option not in valid_opt:
             print("Invlid input. Please input one of the following digits to proceed:\n\
@@ -268,14 +268,19 @@ def func_curator():
         # calling add entry function
         addEntry()
     elif option == "2":
+        # calling delete entry function
         deleteEntry()
     elif option == "3":
+        # calling update entry function
         updateEntry()
     elif option == "4":
+        # calling search entry function
         searchEntry()
     elif option == "5":
+        # calling display all entry function
         displayAll()
     elif option == "6":
+        # calling system exit function
         exitSys()
 
 def addEntry():
@@ -304,7 +309,7 @@ def addEntry():
 
         # check for repeated name
         if name in sNameList:
-            print(f"The name {name} already exists in the system, do you want to add a new entry?")
+            print(f"The name {name} already exists in the system, do you want to add a new entry using the same name?")
             ans = optionInputNValidation({"Y": "confirm to add", "R": "re-enter the name", "M": "return to menu"})
             if ans == "M":
                 return None
@@ -341,13 +346,16 @@ def deleteEntry():
     sDicts = displayAll("internal")
 
     if len(sDicts) == 0:
-        input("There is no entry in the system at the moment. Please Add an entry. Input any key to return to menu. ")
+        input("There is no entry in the system at the moment. Please Add an entry. Press enter key to return to menu. ")
         return None
 
     confirmed = False
     while confirmed == False:
+        # If user does not confirm, then reset the matched list of record
         matchList = []
+
         print("Input the name to be deleted.")
+        # Asking user to input name
         name = nameInputNValidation()
         
         for sDict in sDicts:
@@ -355,7 +363,7 @@ def deleteEntry():
                 matchList.append(sDict)
 
         if len(matchList) == 0:
-            print(f"The system found no matching record.")
+            print(f"The system found no matching entry.")
             
             ans = optionInputNValidation({"R": "re-enter the name", "M": "return to menu"})
             if ans == "R":
@@ -365,8 +373,8 @@ def deleteEntry():
                 return None
         
         elif len(matchList) == 1:
-            print(f"The system found {len(matchList)} record.")
-            print(f"The record to be deleted: {matchList[0]}")
+            print(f"The system found {len(matchList)} matched entry.")
+            print(f"The entry to be deleted: {matchList[0]}")
             ans = optionInputNValidation({"Y": "confirm to delete the entry", "R": "re-enter the name", "M": "return to menu"})
             
             if ans == "M":
@@ -391,8 +399,8 @@ def deleteEntry():
                 continue
 
         elif len(matchList) > 1:
-            print(f"The system found {len(matchList)} records.")
-            print(f"The record to be deleted: {matchList}")
+            print(f"The system found {len(matchList)} entries.")
+            print(f"The entries to be deleted: {matchList}")
             ans = optionInputNValidation({"A": "delete all", "O": "decide one by one", "R": "re-enter the name", "M": "return to menu"})
             
             if ans == "M":
@@ -418,23 +426,30 @@ def deleteEntry():
                 confirmed = True
                 
             elif ans == "O":
+                removeList = []
                 for item in matchList:
                     print(f"Delete {item}?")
                     decision = optionInputNValidation({"Y": "delete", "N": "keep"})
                     if decision == "Y":
                         sDicts.remove(item)
+                        removeList.append(item)
                 
                 # create a file call "student_info_temp.txt" is safer, if there is any error, the original record will not be affected.
-                try:
-                    sInfoTemp = open("student_info_sample.txt", "w", encoding="utf-8")
-                    studentInfoWriter(sInfoTemp, sDicts)
-                except:
-                    fileCloser(sInfoTemp)
-                    os.remove("student_info_sample.txt")
-                    exit()
+                if len(removeList) != 0:
+                    try:
+                        sInfoTemp = open("student_info_sample.txt", "w", encoding="utf-8")
+                        studentInfoWriter(sInfoTemp, sDicts)
+                    except:
+                        fileCloser(sInfoTemp)
+                        os.remove("student_info_sample.txt")
+                        exit()
                 
-                os.replace("student_info_sample.txt", "student_info_sample.txt")
-                print("Record deleted.")
+                    fileCloser(sInfoTemp)
+                    os.replace("student_info_sample.txt", "student_info.txt")
+                    print(f"Entry {removeList} deleted.")
+                else:
+                    print("All entries are kept")
+
                 confirmed = True
             elif ans == "R":
                 continue
@@ -446,7 +461,7 @@ def updateEntry():
     sDicts = displayAll("internal")
 
     if len(sDicts) == 0:
-        input("There is no entry in the system at the moment. Please Add an entry. Input any key to return to menu. ")
+        input("There is no entry in the system at the moment. Please Add an entry. Press enter key to return to menu. ")
         return None
 
     confirmed = False
@@ -460,7 +475,7 @@ def updateEntry():
                 matchList.append(sDict)
 
         if len(matchList) == 0:
-            print(f"The system found no matching record.")
+            print(f"The system found no matching entry.")
             
             ans = optionInputNValidation({"R": "re-enter the name", "M": "return to menu"})
             if ans == "R":
@@ -470,8 +485,8 @@ def updateEntry():
                 return None
         
         elif len(matchList) == 1:
-            print(f"The system found {len(matchList)} record.")
-            print(f"The record to be updated: {matchList[0]}")
+            print(f"The system found {len(matchList)} entry.")
+            print(f"The entry to be updated: {matchList[0]}")
 
             editConfirm = False
             while editConfirm == False:
@@ -518,7 +533,7 @@ def updateEntry():
                         
                         fileCloser(sInfoTemp)
                         os.replace("student_info_sample.txt", "student_info.txt")
-                        print("Record updated")
+                        print("entry updated")
                     
                     editConfirm = True
                     confirmed = True
@@ -527,15 +542,15 @@ def updateEntry():
                     continue
 
         elif len(matchList) > 1:
-            print(f"The system found {len(matchList)} records.")
-            print(f"The record to be edited: {matchList}")
+            print(f"The system found {len(matchList)} entries.")
+            print(f"The entries to be updated: {matchList}")
 
             updateList = []
 
             for entry in matchList:
                 editConfirm = False
                 while editConfirm == False:
-                    print(f"Edit for {entry}")
+                    print(f"Update for {entry}")
                     print(f"The current name: {entry['name']}")
                     updateName = optionInputNValidation({"Y": "proceed to update student's name", "N": "keep the name unchanged"})
                     if updateName == "Y":
@@ -588,7 +603,7 @@ def updateEntry():
                         
             fileCloser(sInfoTemp)
             os.replace("student_info_sample.txt", "student_info.txt")
-            print("Record updated")
+            print("Entries updated")
 
 def searchEntry():
     print("----- Search Entry -----")
@@ -601,7 +616,7 @@ def searchEntry():
     sDicts = studentInfoReader(sInfo)
 
     if len(sDicts) == 0:
-        input("There is no entry in the system at the moment. Please Add an entry. Input any key to return to menu. ")
+        input("There is no entry in the system at the moment. Please Add an entry. Press enter key to return to menu. ")
         return None
     
     name = nameInputNValidation()
@@ -610,8 +625,13 @@ def searchEntry():
         if sDict["name"] == name:
             matchList.append(sDict)
     
-    print(f"The system found {len(matchList)} record.")
+    if len(matchList) == 0:
+        print(f"No matched entry found.")
+
+    print(f"The system found {len(matchList)} matched entries.")
     print(f"The serach result: {matchList}")
+
+    input("Press enter key to return to menu. ")
 
 def displayAll(callBy="user"):
     sInfo = fileOpener(fileName="student_info.txt", openMode="r", allowCreate=False)
@@ -620,10 +640,10 @@ def displayAll(callBy="user"):
         exit()
     
     sDicts = studentInfoReader(sInfo)
-    print(f"The system currently has {len(sDicts)} records.")
+    print(f"The system currently has {len(sDicts)} entries.")
     print(sDicts)
     if callBy != "internal":
-        input("Press any key to return to menu.")
+        input("Press enter key to return to menu. ")
     fileCloser(sInfo)
     return sDicts
 
