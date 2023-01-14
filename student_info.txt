@@ -1,8 +1,5 @@
-{'name': 'Shi', 'gender': 'M', 'age': '20'}
 {'name': 'Shiba', 'gender': 'M', 'age': '20'}
 {'name': 'Shil', 'gender': 'F', 'age': '21'}
 {'name': 'Fox', 'gender': 'F', 'age': '22'}
 {'name': 'Peter Chan Mohammed', 'gender': 'M', 'age': '20'}
 {'name': 'Peter Chan', 'gender': 'M', 'age': '20'}
-{'name': 'Shi', 'gender': 'M', 'age': '21'}
-{'name': 'Shi', 'gender': 'F', 'age': '24'}

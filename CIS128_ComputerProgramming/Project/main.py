@@ -393,7 +393,7 @@ def deleteEntry():
                 
                 fileCloser(sInfoTemp)
                 os.replace("student_info_sample.txt", "student_info.txt")
-                print("Record deleted.")
+                print(f"Entry {matchList} deleted.")
                 confirmed = True
             elif ans == "R":
                 continue
@@ -421,7 +421,7 @@ def deleteEntry():
                 
                 fileCloser(sInfoTemp)
                 os.replace("student_info_sample.txt", "student_info.txt")
-                print("Record deleted.")
+                print(f"All entries {matchList} deleted.")
 
                 confirmed = True
                 
