@@ -507,7 +507,7 @@ def updateEntry():
                 updateAge = optionInputNValidation({"Y": "proceed to update student's age", "N": "keep the age unchanged"})
                 if updateAge == "Y":
                     age = ageInputNValidation(name)
-                elif updateGender == "N":
+                elif updateAge == "N":
                     age = matchList[0]["age"]
 
                 if updateName == "N" and updateGender == "N" and updateAge == "N":
@@ -533,7 +533,7 @@ def updateEntry():
                         
                         fileCloser(sInfoTemp)
                         os.replace("student_info_sample.txt", "student_info.txt")
-                        print("entry updated")
+                        print("The entry is updated.")
                     
                     editConfirm = True
                     confirmed = True
@@ -569,7 +569,7 @@ def updateEntry():
                     updateAge = optionInputNValidation({"Y": "proceed to update student's age", "N": "keep the age unchanged"})
                     if updateAge == "Y":
                         age = ageInputNValidation(name)
-                    elif updateGender == "N":
+                    elif updateAge == "N":
                         age = entry["age"]
 
                     if updateName == "N" and updateGender == "N" and updateAge == "N":
