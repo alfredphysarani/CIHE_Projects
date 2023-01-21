@@ -133,6 +133,66 @@ def optionInputNValidation(optionDict: dict):
     
     return ans
 
+def sidInputNValidation():
+    '''
+    Purpose: 
+        1. To get input of student id
+        2. Validate the student id in the format of e.g. (s22212852)
+    Parameter: nil
+    Return: 
+        1. sid (String): a student id input by user after passing validation
+    '''
+    
+    sidValid = None
+    while not sidValid:
+        sidInput = input("Please enter the ID of the student (in the format 's' + 8-digits): ")
+        # strip accidentally added space at the start and the end of the sid
+        sid = sidInput.strip()
+        
+        # using regex only accept characters starting with char and ending with char + ".", allow space in the middle
+        sidValid = re.fullmatch("^[s]{1}[0-9]{8}$", sid)
+        if not sidValid:
+            print(f"The input name '{sidInput}' is not in the format of sXXXXXXXX, where X is an integer from 0-9")
+        
+    return sid
+
+def contactInputNValidation(name):
+    '''
+    Purpose: 
+        1. To get input of contact number
+        2. Validate the contact number in the format of HK Number i.e. 8 digits, starting with 2, 3, 5, 6, 9
+    Parameter: nil
+    Return: 
+        1. contact (String): a student id input by user after passing validation
+    '''
+    
+    contactValid = None
+    while not contactValid:
+        contactInput = input(f"Please enter the contact number of {name}: ")
+        # strip accidentally added space at the start and the end of the sid
+        contact = contactInput.strip()
+
+        # checking whether the input is numeric, if not skip the loop and ask the user to re-enter
+        if contact.isnumeric() == False:
+            print("The contact number contains non-numeric characters. Please re-enter the contact number.")
+            continue
+
+        # checking whether the length of contact number is 8, if not skip the loop and ask the user to re-enter
+        if len(contact) != 8:
+            print(
+                f"The contact number consists of {len(contact)} numbers, which does not match the standard HK number, 8-numbers.\
+                 Please re-enter the contact number. ")
+            continue
+
+        # checking whether the starting number of contact number is 2, 3, 5, 6, 7, 8, 9 
+        if contact[0] not in ["2", "3", "5", "6", "7", "8", "9"]:
+            print("The starting number of the phone number is not 2, 3, 5, 6, 7, 8, 9. Please re-enter the contact number.")
+            continue
+
+        contactValid = True
+    
+    return contact
+        
 def nameInputNValidation():
     '''
     Purpose: 
@@ -325,60 +385,100 @@ def addEntry():
     # display all the entries for user first
     sDicts = displayAll("internal")
 
-    # creating a list of student name storing in the system
+    # creating a list of studnet ID and name storing in the system
+    sidList = []
     sNameList = []
+    contactList = []
+
     for sDict in sDicts:
         sNameList.append(sDict["name"])
+        sidList.append(sDict["student ID"])
+        contactList.append(sDict["contact number"])
 
     # Setting a while loop such that it does not end until the user confirm the detail
     confirmed = False
     while not confirmed:
 
-        # asking for user input of name
-        name = nameInputNValidation()
+        sid = sidInputNValidation()
 
-        # checking if the name already exists in the system
-        if name in sNameList:
-            print(f"The name {name} already exists in the system, do you want to add a new entry using the same name?")
-            ans = optionInputNValidation({"Y": "confirm to add", "R": "re-enter the name", "M": "return to menu"})
-            if ans == "M":
-                # return to menu
-                return None
-            elif ans == "R":
-                # skip the following code to re-enter the name
-                continue
+        if sid in sidList:
+            print(f"The student ID {sid} already exists in the system. Please re-enter the student ID.")
+            continue
+            
+
+        # asking for user input of name
+        isDuplicate = True
+        while isDuplicate == True:
+            name = nameInputNValidation()
+            # checking if the name already exists in the system
+            if name in sNameList:
+                print(f"The name {name} already exists in the system, do you want to add a new entry using the same name?")
+                ans = optionInputNValidation({"Y": "confirm to add", "R": "re-enter the name", "M": "return to menu"})
+                if ans == "M":
+                    # return to menu
+                    return None
+                elif ans == "R":
+                    # skip the following code to re-enter the name
+                    continue
+                elif ans == "Y":
+                    # break the while loop if yes
+                    break
+            else:
+                isDuplicate = False
         
         # asking for gender input
         gender = genderInputNValidation(name)
-        # asing for age input
+        # asking for age input
         age = ageInputNValidation(name)
         
+        # asking for contact
+        isDuplicate = True
+        while isDuplicate == True:
+            contact = contactInputNValidation(name)
+            # checking if the name already exists in the system
+            if contact in contactList:
+                print(f"The contact number {contact} already exists in the system, do you want to add a new entry using the same name?")
+                ans = optionInputNValidation({"Y": "confirm to add", "R": "re-enter the contact number", "M": "return to menu"})
+                if ans == "M":
+                    # return to menu
+                    return None
+                elif ans == "R":
+                    # skip the following code to re-enter the name
+                    continue
+                elif ans == "Y":
+                    # break the while loop if yes
+                    break
+            else:
+                isDuplicate = False
+
         # display the info to be added
         print(f"Please confirm whether the information is correct.\n\
+            Student ID: {sid}\n\
             Name of the student: {name}\n\
             Gender of the student: {gender}\n\
-            Age of the student: {age}")
+            Age of the student: {age}\n\
+            Contact of student: {contact}")
 
         # asking for confirmation from user
-        ans = optionInputNValidation({"Y": "confirm", "R": "re-enter the name", "M": "return to menu"})
+        ans = optionInputNValidation({"Y": "confirm", "R": "re-enter the info", "M": "return to menu"})
         
         if ans == "M":
             # Option: return None to back to menu
-            print(f"Discarded student information for {name}, gender: {gender} and age: {age}. Returning to Menu.")
+            print(f"Discarded student information for student ID: {sid}, name: {name}, gender: {gender}, age: {age} and contact: {contact}. Returning to Menu.")
             return None
 
         elif ans == "Y":
             # Option: open the file in append mode
             sInfo = fileOpener(fileName="student_info.txt", openMode="a", allowCreate=False)
-            newSDict = {"name": name, "gender": gender, "age": str(age)}
+            newSDict = {"student ID": sid, "name": name, "gender": gender, "age": str(age), "contact number": contact}
             sInfo.write(str(newSDict)+"\n")
             sInfo.close()
 
-            print(f"Added student information for {name}, gender: {gender} and age: {age}!")
+            print(f"Added student information for student ID: {sid}, name: {name}, gender: {gender}, age: {age} and contact: {contact}!")
             confirmed = True # ending the while loop
         elif ans == "R":
             # Option: skip the following code to re-enter the name
-            print(f"Discared student information for {name}, gender: {gender} and age: {age}.")
+            print(f"Discared student information for student ID: {sid}, name: {name}, gender: {gender}, age: {age} and contact: {contact}.")
             continue
     
     # return to menu

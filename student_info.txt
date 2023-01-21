@@ -1,9 +1,1 @@
-{'name': 'Peter Chan Mohammed', 'gender': 'M', 'age': '20'}
-{'name': 'S', 'gender': 'F', 'age': 25}
-{'name': 'Hellthree', 'gender': 'F', 'age': 12}
-{'name': 'Helloooo', 'gender': 'F', 'age': 20}
-{'name': 'Helltwooo', 'gender': 'M', 'age': 23}
-{'name': 'Shiba', 'gender': 'F', 'age': 22}
-{'name': 'B', 'gender': 'F', 'age': 20}
-{'name': 'Bye', 'gender': 'F', 'age': 17}
-{'name': 'Peter Chan Mohammed', 'gender': 'F', 'age': '40'}
+{'student ID': 's22212852', 'name': 'Alfred Cheung', 'gender': 'M', 'age': '30', 'contact number': '67906699'}
