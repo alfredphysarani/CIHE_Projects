@@ -5,26 +5,30 @@
 
 using namespace std;
 
+const int hdollar_value = 50;
+const int quat_value = 25;
+const int dime_value = 10;
+const int nick_value = 5;
+
 int main()
 {
     // variable assignment
-    int cents, hdollar, quat, dime, nick, penn;
+    int change;
 
     // ask for user input for cents
     cout << "Enter change in cents: ";
-    cin >> cents;
+    cin >> change;
 
-    cout << "The change you entered is " << cents<<endl;
-    hdollar = cents / 50;
-    cout << "The number of half-dollars to be returned is " << hdollar << endl;
-    quat = cents % 50 / 25;
-    cout << "The number of quaters to be returned is " << quat << endl;
-    dime = cents % 50 % 25 / 10;
-    cout << "The number of dimes to be returned is " << dime << endl;
-    nick = cents % 50 % 25 % 10 / 5;
-    cout << "The number of nickels to be returned is " << nick << endl;
-    penn = cents % 50 % 25 % 10 % 5;
-    cout << "The number of pennies to be returned is " << penn << endl;
+    cout << "The change you entered is " << change <<endl;
+    cout << "The number of half-dollars to be returned is " << change / hdollar_value << endl;
+    change = change % hdollar_value;
+    cout << "The number of quaters to be returned is " << change / quat_value << endl;
+    change = change % quat_value;
+    cout << "The number of dimes to be returned is " << change / dime_value << endl;
+    change = change % dime_value;
+    cout << "The number of nickels to be returned is " << change / nick_value << endl;
+    change = change % nick_value;
+    cout << "The number of pennies to be returned is " << change << endl;
 
     return 0;
 }
