@@ -3,7 +3,10 @@ CIS-128 Project - Student Management System
 Name: Cheung Siu Chun
 SID: 22212852
 
-version: 1.0
+version: 1.1
+- Added support of student ID and contact number in add entry and update entry function
+- Combined the if condition of update entry for mulitple found entry on single entry
+- Added a warning if user update the student name, which already exists in other entries
 '''
 # Library Import
 import re # FOR input validation
@@ -372,9 +375,11 @@ def addEntry():
     Purpose: 
         1. Ask users about the Name, Gender and Age of the student
         2. Validate User's input of the following criteria
-            Name: accepting format 
+            student ID: sXXXXXXXX (unique)
+            Name: accepting format (warning if duplicate)
             Gender: M and F
-            Age: integer from 0 to 150 
+            Age: integer from 0 to 150
+            contact number: XXXXXXXX (warning if duplicate)
         3. Ask user inputs once again if user input is not valid
         4. if student with the same name exists, ask 
     Parameter: nil
@@ -437,7 +442,7 @@ def addEntry():
             contact = contactInputNValidation(name)
             # checking if the name already exists in the system
             if contact in contactList:
-                print(f"The contact number {contact} already exists in the system, do you want to add a new entry using the same name?")
+                print(f"The contact number {contact} already exists in the system, do you want to add it?")
                 ans = optionInputNValidation({"Y": "confirm to add", "R": "re-enter the contact number", "M": "return to menu"})
                 if ans == "M":
                     # return to menu
@@ -649,8 +654,8 @@ def updateEntry():
     '''
     Purpose: 
         1. Ask users to input a name
-            a. if one entry matched -> ask whether to change name, gender, age one by one and then confirm
-            b. if two or more entries matched -> ask each entry whether to change name, gender, age one by one and then confirm
+            a. if one entry matched -> ask whether to change student ID, name, gender, age and contact number one by one and then confirm
+            b. if two or more entries matched -> ask each entry whether to change student ID, name, gender, age and contact number one by one and then confirm
             c. if no entry matched -> return to menu / re-enter the name
         2. Update the entry with the new input value
     Parameter: nil
@@ -669,16 +674,22 @@ def updateEntry():
     confirmed = False
     while confirmed == False:
         matchList = []
+        sidList = []
+        nameList = []
+        contactList = []
         print("Input a name to be updated.")
         # ask user to input name
         name = nameInputNValidation()
         
         # checking if there are matched names existing in the system
         for sDict in sDicts:
+            sidList.append(sDict["student ID"])
+            contactList.append(sDict["contact number"])
+            nameList.append(sDict["name"])
             if sDict["name"] == name:
                 matchList.append(sDict)
         
-        # Case c: for the case of no matching name found
+        # Case b: for the case of no matching name found
         if len(matchList) == 0:
             print(f"The system found no matching entry.")
             
@@ -691,91 +702,9 @@ def updateEntry():
                 # Option: return to menu by ending the function
                 print("Returning to menu without updating.")
                 return None
-        
-        # Case a: for the case of 1 entry with matching name found
-        elif len(matchList) == 1:
-            print(f"The system found {len(matchList)} entry.")
-            print(f"The entry to be updated: {matchList[0]}")
-            
-            # create a while loop such that entry will only be saved when the user confirmed (starting point of re-loop)
-            editConfirm = False
-            while editConfirm == False:
 
-                # provide options for users (update the name / keep the name unchanged)
-                updateName = optionInputNValidation({"Y": "proceed to update student's name", "N": "keep the name unchanged"})
-                if updateName == "Y":
-                    # ask for input to update the name
-                    name = nameInputNValidation()
-                elif updateName == "N":
-                    # keep the name unchagned
-                    name = matchList[0]["name"]
-
-                print(f"The current gender for {name}: {matchList[0]['gender']}")
-                # provide options for users (update the gender / keep the gender unchanged)
-                updateGender = optionInputNValidation({"Y": "proceed to update student's gender", "N": "keep the gender unchanged"})
-                if updateGender == "Y":
-                    # ask for input to update the gender
-                    gender = genderInputNValidation(name)
-                elif updateGender == "N":
-                    # keep the gender unchagned
-                    gender = matchList[0]["gender"]
-
-                print(f"The current age for {name}: {matchList[0]['age']}")
-                # provide options for users (update the age / keep the age unchanged)
-                updateAge = optionInputNValidation({"Y": "proceed to update student's age", "N": "keep the age unchanged"})
-                if updateAge == "Y":
-                    # ask for input to update the age
-                    age = ageInputNValidation(name)
-                elif updateAge == "N":
-                    # keep the age gender unchagned
-                    age = matchList[0]["age"]
-
-
-                if updateName == "N" and updateGender == "N" and updateAge == "N":
-                    # if no change in all info
-                    print("There is no change in student info.")
-                else:
-                    # summary of updated info
-                    print(f"The updated student's information:\n\
-                        Name of student: {name}\n\
-                        Gender of student: {gender}\n\
-                        Age of Student: {age}")
-                
-                # provide options for users (confirm to update the entry / re-enter the information)
-                ans = optionInputNValidation({"Y": "confirm to update the entry", "R": "re-enter the information"})
-
-                if ans == "Y":
-                    # Option: confirm to update the entry
-                    if updateName == "Y" or updateGender == "Y" or updateAge == "Y": # if there is at least one info unpdated
-                        sDicts.remove(matchList[0]) # remove the selected entry
-                        sDicts.append({"name": name, "gender": gender, "age": age}) # adding the updated entry
-
-                        # create a file call "student_info_temp.txt" is safer, if there is any error, the original record will not be affected.
-                        try:
-                            sInfoTemp = open("student_info_sample.txt", "w", encoding="utf-8")
-                            studentInfoWriter(sInfoTemp, sDicts) # write the updated list of dict into student_info_sample.txt
-                        except:
-                            # if there is any error, close file then remove the temporary file
-                            fileCloser(sInfoTemp)
-                            os.remove("student_info_sample.txt")
-                            exit() # exist system
-                        
-                        fileCloser(sInfoTemp) # close the file
-                        os.replace("student_info_sample.txt", "student_info.txt") # replace the original file with the temp file
-                        print("The entry is updated.") 
-                    
-                    # Quiting the while loop for confirmation of the update info
-                    editConfirm = True
-
-                    # CLosing the while loop
-                    confirmed = True
-                
-                elif ans == "R":
-                    # Option: Skip the rest of the loop back to enter name
-                    continue
-
-        # Case b: for the case of 2 or more entries with matching name found
-        elif len(matchList) > 1:
+        # Case a: for the case of 1 or more entries with matching name found
+        elif len(matchList) >= 1:
             print(f"The system found {len(matchList)} entries.")
             print(f"The entries to be updated: {matchList}")
 
@@ -787,17 +716,63 @@ def updateEntry():
                 # create a while loop such that entry will only be saved when the user confirmed (starting point of re-loop)
                 editConfirm = False
                 while editConfirm == False:
-                    print(f"Update for {entry}")
+                    # create a while loop such that entry will only be saved when the user confirmed (starting point of re-loop)
+
+                    print(f"Current Selected Entry: {entry}")
+
+                    # Section 1: Update Student ID
+                    print(f"The current student ID for {name}: {entry['student ID']}")
+                    # provide options for users (update the student ID / keep the student ID unchanged)
+                    updateSid = optionInputNValidation({"Y": "proceed to update student ID", "N": "keep the name unchanged"})
+                    if updateSid == "Y":
+                        # intitiate a loop to check whether the updated student ID already exists in the system 
+                        isDuplicate = True
+                        while isDuplicate:
+                            sid = sidInputNValidation()
+                            # if student ID not equal to the original SID and already exists in the list -> reject
+                            if sid != entry["student ID"] and sid in sidList:
+                                print("The SID already exists in the system for other entries. Please enter a unique SID.")
+                            else:
+                                # update the student id list for next entry duplication checking
+                                sidList.remove(entry["student ID"])
+                                sidList.append(sid)
+                                isDuplicate = False
+                    elif updateSid == "N":
+                        # keep the student ID unchagned
+                        sid = entry["student ID"]
+
+                    # Section 2: Update Student Name
                     print(f"The current name: {entry['name']}")
                     # provide options for users (update the name / keep the name unchanged)
                     updateName = optionInputNValidation({"Y": "proceed to update student's name", "N": "keep the name unchanged"})
                     if updateName == "Y":
                         # ask for input to update the name
-                        name = nameInputNValidation()
+                        # intitiate a loop to check whether the updated student ID already exists in the system 
+                        isDuplicate = True
+                        while isDuplicate:
+                            name = nameInputNValidation()
+                            # if student name not equal to the original name and already exists in the list -> ask
+                            if name != entry["name"] and name in nameList:
+                                print(f"The name already exists in the system for other entries. Do you want to change to {name}?")
+                                ans = optionInputNValidation({"Y": "confirm to change", "R": "re-enter the name"})
+                                if ans == "R":
+                                    # skip the following code to re-enter the name
+                                    continue
+                                elif ans == "Y":
+                                    # update the student id list for next entry duplication checking
+                                    nameList.remove(entry["name"])
+                                    nameList.append(name)
+                                    # break the while loop if yes
+                                    break
+                            else:
+                                nameList.remove(entry["name"])
+                                nameList.append(name)
+                                isDuplicate = False
                     elif updateName == "N":
                         # keep the name unchagned
                         name = entry["name"]
                     
+                    # Section 3: Update Student Gender
                     print(f"The current gender for {name}: {entry['gender']}")
                     # provide options for users (update the gender / keep the gender unchanged)
                     updateGender = optionInputNValidation({"Y": "proceed to update student's gender", "N": "keep the gender unchanged"})
@@ -807,7 +782,8 @@ def updateEntry():
                     elif updateGender == "N":
                         # keep the gender unchagned
                         gender = entry["gender"]
-
+                    
+                    # Section 4: Update Student Age
                     print(f"The current age for {name}: {entry['age']}")
                     # provide options for users (update the age / keep the age unchanged)
                     updateAge = optionInputNValidation({"Y": "proceed to update student's age", "N": "keep the age unchanged"})
@@ -817,25 +793,60 @@ def updateEntry():
                     elif updateAge == "N":
                         # keep the age gender unchagned
                         age = entry["age"]
+                    
+                    # Section 5: Update Student contact
+                    print(f"The current contact number: {entry['contact number']}")
+                    # provide options for users (update the name / keep the name unchanged)
+                    updateContact = optionInputNValidation({"Y": "proceed to update student's contact number", "N": "keep the contact number unchanged"})
+                    if updateContact == "Y":
+                        # ask for input to update the contact number
+                        # intitiate a loop to check whether the updated contact number already exists in the system 
+                        isDuplicate = True
+                        while isDuplicate:
+                            contact = contactInputNValidation(name)
+                            # if student name not equal to the original name and already exists in the list -> ask
+                            if contact != entry["contact number"] and contact in contactList:
+                                print(f"The contact number already exists in the system for other entries. Do you want to change to {contact}?")
+                                ans = optionInputNValidation({"Y": "confirm to change", "R": "re-enter the contact number"})
+                                if ans == "R":
+                                    # skip the following code to re-enter the name
+                                    continue
+                                elif ans == "Y":
+                                    # update the contact list for later contact number comparison
+                                    contactList.remove(entry["contact number"])
+                                    contactList.append(contact)
+                                    # break the while loop if yes
+                                    break
+                            else:
+                                # update the contact list for later contact number comparison
+                                contactList.remove(entry["contact number"])
+                                contactList.append(contact)
+                                # quite the loop
+                                isDuplicate = False
+                    elif updateName == "N":
+                        # keep the name unchagned
+                        contact = entry["contact number"]
 
-                    if updateName == "N" and updateGender == "N" and updateAge == "N":
+                    if updateSid == "N" and updateName == "N" and updateGender == "N" and updateAge == "N" and updateContact == "N":
                         # if no change in all info
-                        print("There is no change in student info.")
+                        print(f"There is no change in student info for {entry}")
                     else:
                         # summary of updated info
                         print(f"The updated student's information:\n\
+                            Student ID: {sid}\n\
                             Name of student: {name}\n\
                             Gender of student: {gender}\n\
-                            Age of Student: {age}")
+                            Age of Student: {age}\n\
+                            Contact number of student: {contact}")
                     
                     # provide options for users (confirm to update the entry / re-enter the information)
                     ans = optionInputNValidation({"Y": "confirm to update the entry", "R": "re-enter the information"})
                     if ans == "Y":
                         # Option: confirm to update the entry
-                        if updateName == "Y" or updateGender == "Y" or updateAge == "Y": # if there is at least one info unpdated
+                        if updateSid == "Y" or updateName == "Y" or updateGender == "Y" or updateAge == "Y" or updateContact == "Y": # if there is at least one info unpdated
                             sDicts.remove(entry) # remove the selected entry
-                            updateList.append({"name": name, "gender": gender, "age": age}) # adding the updated entry to the list of updated
-                            sDicts.append({"name": name, "gender": gender, "age": age}) # adding the updated entry of the original copy
+                            updateList.append({"student ID": sid, "name": name, "gender": gender, "age": str(age), "contact number": contact}) # adding the updated entry to the list of updated
+                            sDicts.append({"student ID": sid, "name": name, "gender": gender, "age": str(age), "contact number": contact}) # adding the updated entry of the original copy
                         editConfirm = True # Quiting the while loop for confirmation of the update info
                         confirmed = True # CLosing the while loop
                     elif ans == "R":
