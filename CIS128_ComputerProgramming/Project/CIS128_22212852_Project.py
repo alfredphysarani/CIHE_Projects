@@ -150,12 +150,12 @@ def sidInputNValidation():
     while not sidValid:
         sidInput = input("Please enter the ID of the student (in the format 's' + 8-digits): ")
         # strip accidentally added space at the start and the end of the sid
-        sid = sidInput.strip()
+        sid = sidInput.strip().lower()
         
         # using regex only accept characters starting with char and ending with char + ".", allow space in the middle
         sidValid = re.fullmatch("^[s]{1}[0-9]{8}$", sid)
         if not sidValid:
-            print(f"The input name '{sidInput}' is not in the format of sXXXXXXXX, where X is an integer from 0-9")
+            print(f"The input student ID '{sidInput}' is not in the format of sXXXXXXXX, where X is an integer from 0-9")
         
     return sid
 
@@ -723,7 +723,7 @@ def updateEntry():
                     # Section 1: Update Student ID
                     print(f"The current student ID for {name}: {entry['student ID']}")
                     # provide options for users (update the student ID / keep the student ID unchanged)
-                    updateSid = optionInputNValidation({"Y": "proceed to update student ID", "N": "keep the name unchanged"})
+                    updateSid = optionInputNValidation({"Y": "proceed to update student ID", "N": "keep the student ID unchanged"})
                     if updateSid == "Y":
                         # intitiate a loop to check whether the updated student ID already exists in the system 
                         isDuplicate = True
@@ -731,7 +731,7 @@ def updateEntry():
                             sid = sidInputNValidation()
                             # if student ID not equal to the original SID and already exists in the list -> reject
                             if sid != entry["student ID"] and sid in sidList:
-                                print("The SID already exists in the system for other entries. Please enter a unique SID.")
+                                print("The student ID already exists in the system for other entries. Please enter a unique student ID.")
                             else:
                                 # update the student id list for next entry duplication checking
                                 sidList.remove(entry["student ID"])
@@ -851,6 +851,13 @@ def updateEntry():
                         confirmed = True # CLosing the while loop
                     elif ans == "R":
                         # Option: Skip the rest of the loop back to enter name
+                        # revert the change to the comparison list
+                        contactList.append(entry["contact number"])
+                        contactList.remove(contact)
+                        sidList.append(entry["student ID"])
+                        sidList.remove(sid)
+                        nameList.append(entry["name"])
+                        nameList.remove(name)
                         continue
             
             # display the list of entry updated

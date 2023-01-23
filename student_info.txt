@@ -1,7 +1,6 @@
-{'student ID': 's22212860', 'name': 'Alfred Chan', 'gender': 'M', 'age': '40', 'contact number': '68004700'}
-{'student ID': 's23344456', 'name': 'Cindy Lau', 'gender': 'M', 'age': '20', 'contact number': '23414123'}
 {'student ID': 's23411452', 'name': 'Cindy Lao', 'gender': 'F', 'age': '20', 'contact number': '51413813'}
 {'student ID': 's23413234', 'name': 'Anna Tsui', 'gender': 'M', 'age': '16', 'contact number': '31481141'}
 {'student ID': 's19410143', 'name': 'Fiora Cha', 'gender': 'F', 'age': '27', 'contact number': '61894182'}
-{'student ID': 's19410142', 'name': 'Alfred Cheung', 'gender': 'M', 'age': '22', 'contact number': '67906699'}
 {'student ID': 's19410141', 'name': 'Alfee', 'gender': 'M', 'age': '19', 'contact number': '81410412'}
+{'student ID': 's22212862', 'name': 'Alfred Chen', 'gender': 'M', 'age': '40', 'contact number': '68004701'}
+{'student ID': 's22212860', 'name': 'Alfred Chen', 'gender': 'M', 'age': '26', 'contact number': '68004700'}
