@@ -2,6 +2,7 @@
 //
 
 #include <iostream>
+#include <string>
 using namespace std;
 
 int main()
@@ -10,7 +11,17 @@ int main()
 	cout << "Please input two numbers: ";
 	cin >> x >> y;
 	sum = x + y;
-	cout << "The solution of " << x << " + " << y << " is " << sum;
+	cout << "The solution of " << x << " + " << y << " is " << sum << endl;
+
+	int n = 2147483647;
+	cout << n + 1 << endl;
+
+	string str, str_getline;
+	cin >> str;
+	getline(cin, str_getline);
+	cout << "The word from cin: " << str << endl;
+	cout << "The word from getline: " << str_getline << endl;
+
 	return 0;
 }
 

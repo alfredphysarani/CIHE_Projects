@@ -1,0 +1,4 @@
+﻿  CIS129_Lab1_Q4.cpp
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Lab1_Q4\CIS129_Lab1_Q4\CIS129_Lab1_Q4.cpp(17,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Lab1_Q4\CIS129_Lab1_Q4\CIS129_Lab1_Q4.cpp(18,18): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  CIS129_Lab1_Q4.vcxproj -> C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Lab1_Q4\Debug\CIS129_Lab1_Q4.exe
