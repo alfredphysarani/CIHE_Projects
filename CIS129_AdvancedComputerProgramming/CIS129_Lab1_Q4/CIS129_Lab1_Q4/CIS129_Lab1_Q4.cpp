@@ -8,14 +8,14 @@ using namespace std;
 int main()
 {
     //Question 4
-    int num_a, num_b;
+    double num_a, num_b;
     cout << "Please input first number: ";
     cin >> num_a;
     cout << "Please input second number: ";
     cin >> num_b;
 
-    float half_a = num_a / 2.0;
-    float half_b = num_b / 2.0;
+    double half_a = num_a / 2.0;
+    double half_b = num_b / 2.0;
 
     cout << fixed << showpoint;
     cout << "Average: " << setprecision(2) << num_a / 2.0 + num_b / 2.0;
