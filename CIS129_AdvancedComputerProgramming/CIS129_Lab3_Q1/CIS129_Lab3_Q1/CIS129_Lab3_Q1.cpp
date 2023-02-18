@@ -2,12 +2,56 @@
 //
 
 #include <iostream>
-# 
-
+using namespace std;
+void UpperHeart(int total_line);
+void LowerHeart(int total_line);
+void Heart(int size);
 
 int main()
 {
-    std::cout << "Hello World!\n";
+    // if we can find the number of lines based on the size of heart using a function
+    Heart(5); // input size of heart
+    return 0;
+}
+
+void UpperHeart(int total_line) {
+    for (int nline = 0; nline < total_line; nline++) {
+        for (int j = 0; j < total_line - (nline +1); j++) {
+            cout << ' ';
+        }
+        for (int s = 0; s < 2 * nline + 3; s++) {
+            cout << '*';
+        }
+        for (int j = 0; j < 2*total_line - (2*nline+1); j++) {
+            cout << ' ';
+        }
+        for (int s = 0; s < 2 * nline + 3; s++) {
+            cout << '*';
+        }
+        for (int j = 0; j < total_line - (nline + 1); j++) {
+            cout << ' ';
+        }
+        cout << endl;
+    }
+}
+
+void LowerHeart(int total_line) {
+    for (int nline = 0; nline < total_line; nline++) {
+        for (int j = 0; j < nline + 1; j++) {
+            cout << " ";
+        }
+        for (int s = 0; s < 2*total_line - (2*nline + 1); s++) {
+            cout << "*";
+        }
+        cout << endl;
+    }
+}
+
+void Heart(int size) {
+    int upperLine = size + 1;
+    int lowerLine = 5 + 2 * (size - 1);
+    UpperHeart(upperLine);
+    LowerHeart(lowerLine);
 }
 
 // Run program: Ctrl + F5 or Debug > Start Without Debugging menu
