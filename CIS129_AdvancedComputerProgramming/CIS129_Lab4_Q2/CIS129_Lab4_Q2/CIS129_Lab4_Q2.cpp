@@ -5,6 +5,9 @@
 #include <fstream>
 using namespace std;
 
+const int NO_OF_CAP_LETTER = 26;
+
+void init(int arr[], int noOfItem);
 void characterCount(ifstream& ipt, ofstream& opt, int letterCount[26], int& lineCount);
 void writeTotal(ofstream& opt, int letterCount[26], int& lineCount);
 
@@ -12,8 +15,10 @@ int main()
 {
     // declare variables
     int lineCount = 0;
-    int letterCount[26] = {};
+    int letterCount[NO_OF_CAP_LETTER];
     
+    init(letterCount, NO_OF_CAP_LETTER);
+
     // I/O File
     ifstream inFile;
     ofstream outFile;
@@ -37,6 +42,12 @@ int main()
     inFile.close();
     outFile.close();
     return 0;
+}
+
+void init(int arr[], int noOfItem) {
+    for (int i = 0; i < noOfItem; i++) {
+        arr[i] = 0;
+    }
 }
 
 void characterCount(ifstream& ipt, ofstream& opt, int letterCount[26], int& lineCount) {
