@@ -18,12 +18,27 @@
     <ClCompile Include="CIS129_Project_Supermarket.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="inputHelpercpp.cpp">
+    <ClCompile Include="product.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="uiOptionControl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="customer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inputHelper.h">
+    <ClInclude Include="utility.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="product.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="uiOptionControl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="customer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

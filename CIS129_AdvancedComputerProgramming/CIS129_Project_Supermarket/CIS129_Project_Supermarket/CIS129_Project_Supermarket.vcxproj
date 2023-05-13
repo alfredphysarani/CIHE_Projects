@@ -140,10 +140,15 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="CIS129_Project_Supermarket.cpp" />
-    <ClCompile Include="inputHelpercpp.cpp" />
+    <ClCompile Include="customer.cpp" />
+    <ClCompile Include="product.cpp" />
+    <ClCompile Include="uiOptionControl.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="inputHelper.h" />
+    <ClInclude Include="customer.h" />
+    <ClInclude Include="utility.h" />
+    <ClInclude Include="product.h" />
+    <ClInclude Include="uiOptionControl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

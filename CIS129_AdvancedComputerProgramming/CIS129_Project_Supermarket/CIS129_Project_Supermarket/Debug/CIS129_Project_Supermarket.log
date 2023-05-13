@@ -1,6 +1,15 @@
 ﻿  CIS129_Project_Supermarket.cpp
-C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\CIS129_Project_Supermarket.cpp(35,91): error C2664: 'inputChoice::inputChoice(int,std::string,char [],std::string [])': cannot convert argument 3 from 'initializer list' to 'char []'
-C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\CIS129_Project_Supermarket.cpp(35,56): message : The initializer contains too many elements
-C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\inputHelper.h(13,2): message : see declaration of 'inputChoice::inputChoice'
-  inputHelpercpp.cpp
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\utility.h(89,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\utility.h(99,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\utility.h(109,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\utility.h(124,20): warning C4018: '<': signed/unsigned mismatch
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\utility.h(199,21): warning C4018: '<=': signed/unsigned mismatch
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\utility.h(200,22): warning C4018: '<': signed/unsigned mismatch
+  product.cpp
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\product.cpp(34,8): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\product.cpp(38,13): warning C4244: '+=': conversion from 'double' to 'int', possible loss of data
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\product.cpp(42,16): warning C4244: '-=': conversion from 'double' to 'int', possible loss of data
+  uiOptionControl.cpp
   Generating Code...
+C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\CIS129_Project_Supermarket\utility.h(455): warning C4715: 'editCart': not all control paths return a value
+  CIS129_Project_Supermarket.vcxproj -> C:\Users\AlfredC\OneDrive\Documents\GitHub\CIHE_Projects\CIS129_AdvancedComputerProgramming\CIS129_Project_Supermarket\Debug\CIS129_Project_Supermarket.exe

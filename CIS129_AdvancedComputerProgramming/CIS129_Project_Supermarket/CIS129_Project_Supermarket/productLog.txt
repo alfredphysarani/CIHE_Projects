@@ -1,0 +1,11 @@
+1 Broccoli 8 5
+2 Watermelon 22 8
+3 Pork Chop 30 20
+4 Rice Noodles 15 16
+5 Beef 15 16
+6 Chicken Wing 20 3
+7 Apple 4.2 5
+8 Orange 6.5 16
+9 Spinach 3 15
+10 Potato Chips 10 8
+11 Syrub 30 5
